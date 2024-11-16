@@ -7,7 +7,7 @@ Download the project and install npm packages
 
 ## DB
 Using MySQL,
-Download DB file from project and setup
+Download DB file from project in folder db_sql_file and setup
 
 ## `nodemon server.js`
 Runs the app in the development mode.\
