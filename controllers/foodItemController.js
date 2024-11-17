@@ -88,42 +88,10 @@ const deleteFoodItem = async (req, res) => {
 };
 
 
-//PWA
-const getAllFoods = async (req, res) => {
-  const foods = await FoodItem.getAll();
-  res.json(foods);
-};
-
-const addFood = async (req, res) => {
-  const { name, cost, ingredients } = req.body;
-  const result = await FoodItem.add({ name, cost, ingredients });
-  res.status(201).json(result);
-};
-
-const syncOfflineChanges = async (req, res) => {
-  const { changes } = req.body;
-  try {
-    for (const change of changes) {
-      if (change.type === 'update') {
-        await FoodItem.update(change);
-      } else if (change.type === 'add') {
-        await FoodItem.add(change);
-      }
-    }
-    res.json({ message: 'Sync successful' });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to sync changes' });
-  }
-};
-
-
 module.exports = {
     createFoodItem,
     getAllFoodItems,
     getFoodItemById,
     updateFoodItem,
-    deleteFoodItem,
-    syncOfflineChanges,
-    getAllFoods,
-    addFood
+    deleteFoodItem
 };

@@ -6,6 +6,7 @@ const {
     updateCustomer,
     deleteCustomer,
     getCustomerById,
+    syncCustomer
 } = require('../controllers/customerController');
 
 const router = express.Router();
@@ -24,5 +25,7 @@ router.delete('/delete/:id', authMiddleware, adminMiddleware, deleteCustomer);
 
 // Get customer by ID (admin only)
 router.get('/:id', authMiddleware, adminMiddleware, getCustomerById);
+
+router.post('/sync', authMiddleware, adminMiddleware, syncCustomer);
 
 module.exports = router;

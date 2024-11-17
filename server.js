@@ -26,9 +26,16 @@ app.use('/api/auth', authRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/foods", foodItemRoutes);
 
-// Serve service-worker.js correctly
+// Serve static files from public/
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/service-worker.js', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'build', 'service-worker.js'));
+    res.setHeader('Content-Type', 'application/javascript');
+    res.sendFile(path.join(__dirname, 'public', 'service-worker.js'));
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;

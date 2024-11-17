@@ -68,10 +68,22 @@ const getCustomerById = async (req, res) => {
     }
 };
 
+const syncCustomer = async (req, res) => {
+    const { content, id, isEdit } = req.body.data;
+    const { name, email, phone, address } = content;
+    try {
+        const result = await Customer.syncCustomer(id, name, email, phone, address, isEdit);
+        res.status(200).json({ status: 200, message: 'Customer sync successfully', customerId: result.insertId });
+    } catch (error) {
+        res.status(500).json({ message: 'Error creating customer', error: error.message });
+    }
+};
+
 module.exports = {
     createCustomer,
     getAllCustomers,
     updateCustomer,
     deleteCustomer,
     getCustomerById,
+    syncCustomer
 };

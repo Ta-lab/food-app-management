@@ -9,7 +9,6 @@ router.get('/food-items/:id', FoodItemController.getFoodItemById);
 router.put('/food-items/:id', upload.single('image'), FoodItemController.updateFoodItem);
 router.delete('/food-items/:id', FoodItemController.deleteFoodItem);
 
-router.post('/sync', FoodItemController.syncOfflineChanges);
 
 
 module.exports = router;

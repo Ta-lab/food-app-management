@@ -36,10 +36,40 @@ const getCustomerById = async (id) => {
     return rows[0];
 };
 
+// Sync Customer
+const syncCustomer = async (id, name, email, phone, address, isEdit) => {
+    try {
+        if (isEdit) {
+            const query = `
+                UPDATE data
+                SET name = ?, email = ?, phone = ?, address = ?
+                WHERE id = ?`;
+
+            const [result] = await db.query(query, [name, email, phone, address, id]);
+
+            if (result.affectedRows === 0) {
+                throw new Error(`No customer found with id ${id} to update.`);
+            }
+            return result;
+        } else {
+            const query = `
+                INSERT INTO data (name, email, phone, address)
+                VALUES (?, ?, ?, ?)`;
+
+            const [result] = await db.query(query, [name, email, phone, address]);
+            return result;
+        }
+    } catch (err) {
+        console.error('Error syncing data:', err.message);
+        throw new Error(err.message); // Propagate the error to the caller
+    }
+};
+
 module.exports = {
     createCustomer,
     getAllCustomers,
     updateCustomer,
     deleteCustomer,
     getCustomerById,
+    syncCustomer
 };

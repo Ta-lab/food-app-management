@@ -38,38 +38,10 @@ const deleteFoodItem = async (id) => {
 };
 
 
-
-//PWA
-
-const getAll = async () => {
-    return db.query('SELECT * FROM foods');
-};
-
-const add = async (food) => {
-    return db.query('INSERT INTO foods (name, cost, ingredients) VALUES (?, ?, ?)', [
-        food.name,
-        food.cost,
-        food.ingredients,
-    ]);
-};
-
-const update = async (food) => {
-    return db.query('UPDATE foods SET name = ?, cost = ?, ingredients = ? WHERE id = ?', [
-        food.name,
-        food.cost,
-        food.ingredients,
-        food.id,
-    ]);
-};
-
-
 module.exports = {
     createFoodItem,
     getAllFoodItems,
     getFoodItemById,
     updateFoodItem,
-    deleteFoodItem,
-    getAll,
-    add,
-    update
+    deleteFoodItem
 };
