@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 exports.createUser = async (userData) => {
-  console.log("userData",userData)
+  // console.log("userData",userData)
   const sql = `INSERT INTO users (username, email, password, role_id) VALUES (?, ?, ?, ?)`;
   return db.execute(sql, [userData.username, userData.email, userData.password, userData.role]);
 };

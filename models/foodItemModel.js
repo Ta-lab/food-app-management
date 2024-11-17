@@ -37,11 +37,40 @@ const deleteFoodItem = async (id) => {
     return result;
 };
 
+// Sync FoodItems
+const syncFoodItems = async (id, name, cost, ingredients, isEdit) => {
+    try {
+        if (isEdit) {
+            const query = `
+                UPDATE food_items
+                SET name = ?, cost = ?, ingredients = ?,
+                WHERE id = ?`;
+
+            const [result] = await db.query(query, [name, cost, ingredients, id]);
+
+            if (result.affectedRows === 0) {
+                throw new Error(`No food item found with id ${id} to update.`);
+            }
+            return result;
+        } else {
+            const query = `
+                INSERT INTO food_items (name, cost, ingredients)
+                VALUES (?, ?, ?)`;
+
+            const [result] = await db.query(query, [name, cost, ingredients]);
+            return result;
+        }
+    } catch (err) {
+        console.error('Error syncing data:', err.message);
+        throw new Error(err.message);
+    }
+};
 
 module.exports = {
     createFoodItem,
     getAllFoodItems,
     getFoodItemById,
     updateFoodItem,
-    deleteFoodItem
+    deleteFoodItem,
+    syncFoodItems
 };

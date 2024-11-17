@@ -87,11 +87,24 @@ const deleteFoodItem = async (req, res) => {
     }
 };
 
+// Sync FoodItems
+const syncFoodItems = async (req, res) => {
+    const { content, id, isEdit } = req.body.data;
+    const { name, cost, ingredients} = content;
+    try {
+        const result = await FoodItem.syncFoodItems(id, name, cost, ingredients, isEdit);
+        res.status(200).json({ status: 200, message: 'FoodItems Sync successfully', FoodItemId: result.insertId });
+    } catch (error) {
+        res.status(500).json({ message: 'Error Creating FoodItems', error: error.message });
+    }
+};
+
 
 module.exports = {
     createFoodItem,
     getAllFoodItems,
     getFoodItemById,
     updateFoodItem,
-    deleteFoodItem
+    deleteFoodItem,
+    syncFoodItems
 };
