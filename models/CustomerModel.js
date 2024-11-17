@@ -41,7 +41,7 @@ const syncCustomer = async (id, name, email, phone, address, isEdit) => {
     try {
         if (isEdit) {
             const query = `
-                UPDATE data
+                UPDATE customers
                 SET name = ?, email = ?, phone = ?, address = ?
                 WHERE id = ?`;
 
@@ -53,7 +53,7 @@ const syncCustomer = async (id, name, email, phone, address, isEdit) => {
             return result;
         } else {
             const query = `
-                INSERT INTO data (name, email, phone, address)
+                INSERT INTO customers (name, email, phone, address)
                 VALUES (?, ?, ?, ?)`;
 
             const [result] = await db.query(query, [name, email, phone, address]);
